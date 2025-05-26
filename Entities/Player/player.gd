@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 var speed: float = 200
@@ -14,8 +15,19 @@ const dash_speed = 90.0
 var dashing = false
 var can_dash = true
 
+# camera variable
+
+var aim_position : Vector2 = Vector2(1, 0)
+
 signal hp_changed
 signal died
+
+# Camera Movement Control
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		var half_viewport = get_viewport_rect().size / 2.0
+		aim_position = (event.position - half_viewport)
 
 func _process(delta: float) -> void:
 	apply_traction(delta) 
@@ -28,13 +40,13 @@ func apply_traction(delta: float) -> void:
 	var traction: Vector2 = Vector2()
 
 	if(can_move):
-		if Input.is_action_pressed("ui_up"):
+		if Input.is_action_pressed("move_up"):
 			traction.y -= 1
-		if Input.is_action_pressed("ui_down"):
+		if Input.is_action_pressed("move_down"):
 			traction.y += 1
-		if Input.is_action_pressed("ui_left"):
+		if Input.is_action_pressed("move_left"):
 			traction.x -= 1
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("move_right"):
 			traction.x += 1
 	
 	traction = traction.normalized()
