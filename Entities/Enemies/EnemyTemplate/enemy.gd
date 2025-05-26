@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const obj_bullet = preload("res://bullets.tscn")
+const obj_bullet = preload("res://Objects/Bullets/bullets.tscn")
 const check_point: Vector2 = Vector2(169.0, -39.0)
 var shooting_frequency = 80
 var shooting_wait = 0

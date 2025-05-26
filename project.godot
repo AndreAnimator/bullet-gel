@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="bullet-gel"
-run/main_scene="res://playground.tscn"
+run/main_scene="res://Scenes/playground.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,20 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "purple",
+"res://Entities/": "red",
+"res://Entities/Enemies/": "red",
+"res://Entities/Enemies/EnemyTemplate/": "orange",
+"res://Entities/Player/": "red",
+"res://Objects/": "orange",
+"res://Objects/Bullets/": "orange",
+"res://Scenes/": "green",
+"res://UI/": "teal"
+}
 
 [global_group]
 
