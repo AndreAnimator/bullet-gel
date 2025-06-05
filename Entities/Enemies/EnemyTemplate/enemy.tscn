@@ -1,28 +1,57 @@
-[gd_scene load_steps=5 format=3 uid="uid://tjiidy66w3hg"]
+[gd_scene load_steps=12 format=3 uid="uid://tjiidy66w3hg"]
 
 [ext_resource type="Script" uid="uid://o6o3n5bmg7o" path="res://Entities/Enemies/EnemyTemplate/enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://8gok1px5stqh" path="res://Assets/enemy.png" id="1_7k104"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
-size = Vector2(11, 7)
+[ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="2_m0rfr"]
+[ext_resource type="Script" uid="uid://b4j6levlit25k" path="res://Util/Components/health.gd" id="4_3oxjx"]
+[ext_resource type="Script" uid="uid://blhe4swsuh8eb" path="res://Entities/Enemies/EnemyTemplate/enemy_state_machine.gd" id="5_m0rfr"]
+[ext_resource type="Script" uid="uid://e4fxsres0ct8" path="res://Entities/Enemies/EnemyTemplate/States/enemy_idle.gd" id="6_kwjsh"]
+[ext_resource type="Script" uid="uid://b4n2obk2rvaq7" path="res://Entities/Enemies/EnemyTemplate/States/enemy_wander.gd" id="7_e6gbo"]
+[ext_resource type="Script" uid="uid://dlh40o0wyg28d" path="res://Entities/Enemies/EnemyTemplate/States/enemy_chase.gd" id="8_cor1t"]
+[ext_resource type="Script" uid="uid://c3inkuipvrp51" path="res://Entities/Enemies/EnemyTemplate/States/enemy_stun.gd" id="9_x00fy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qi2p4"]
 size = Vector2(14, 13)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
+size = Vector2(11, 7)
+
 [node name="Enemy" type="CharacterBody2D" groups=["enemy", "respawn"]]
 script = ExtResource("1_4gyqm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("2_m0rfr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_qi2p4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_4gyqm")
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_qi2p4")
-
 [node name="Enemy" type="Sprite2D" parent="."]
 texture = ExtResource("1_7k104")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Health" type="Node" parent="." node_paths=PackedStringArray("hitbox")]
+script = ExtResource("4_3oxjx")
+hitbox = NodePath("../Hitbox")
+
+[node name="EnemyStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_m0rfr")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("6_kwjsh")
+
+[node name="Wander" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("7_e6gbo")
+
+[node name="Chase" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("8_cor1t")
+
+[node name="Stun" type="Node" parent="EnemyStateMachine"]
+script = ExtResource("9_x00fy")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_area_2d_body_entered"]
+[connection signal="damaged" from="Hitbox" to="." method="_on_hitbox_damaged"]

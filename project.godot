@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+mouse_cursor/custom_image="uid://fhqtvaq1h7ax"
+mouse_cursor/custom_image_hotspot=Vector2(8, 8)
 
 [file_customization]
 
@@ -31,7 +33,9 @@ folder_colors={
 "res://Objects/": "orange",
 "res://Objects/Bullets/": "orange",
 "res://Scenes/": "green",
-"res://UI/": "teal"
+"res://UI/": "teal",
+"res://Util/": "pink",
+"res://Util/Classes/": "pink"
 }
 
 [global_group]

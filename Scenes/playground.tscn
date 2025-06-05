@@ -32,7 +32,7 @@ tile_map_data = PackedByteArray("AAABAAAAAQAAAAAAAAACAAEAAQAAAAAAAAADAAEAAQAAAAA
 tile_set = SubResource("TileSet_v7dth")
 
 [node name="Enemy" parent="." instance=ExtResource("4_wqftc")]
-position = Vector2(169, -39)
+position = Vector2(-127, -137)
 
 [node name="CanvasGroup" type="CanvasGroup" parent="."]
 

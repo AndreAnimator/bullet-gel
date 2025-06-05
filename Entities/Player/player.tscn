@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckmqdyqfpamim"]
+[gd_scene load_steps=6 format=3 uid="uid://ckmqdyqfpamim"]
 
 [ext_resource type="Script" uid="uid://dgoqmy41wvks2" path="res://Entities/Player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://bk54wvivdh3ib" path="res://Assets/protag.png" id="2_i3pqv"]
 [ext_resource type="Script" uid="uid://b7aubyhkr3ldi" path="res://Entities/Player/player_camera.gd" id="3_lu8i8"]
+[ext_resource type="Script" uid="uid://b8kge5j2w57xy" path="res://Entities/Player/player_weapon.gd" id="4_tekja"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(12, 14)
@@ -27,5 +28,12 @@ wait_time = 0.2
 
 [node name="DashAgainTimer" type="Timer" parent="."]
 
+[node name="PlayerWeapon" type="Node2D" parent="." node_paths=PackedStringArray("firing_position")]
+script = ExtResource("4_tekja")
+firing_position = NodePath("../FiringPosition")
+
+[node name="FiringPosition" type="Marker2D" parent="."]
+
+[connection signal="player_shoot" from="." to="PlayerWeapon" method="_on_character_body_2d_player_shoot"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashAgainTimer" to="." method="_on_dash_again_timer_timeout"]

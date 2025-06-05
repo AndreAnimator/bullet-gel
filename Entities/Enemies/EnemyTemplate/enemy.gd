@@ -1,65 +1,43 @@
+class_name Enemy
 extends CharacterBody2D
+#tem que fazer ele extender a mesma classe que o player
 
-const obj_bullet = preload("res://Objects/Bullets/bullets.tscn")
 const check_point: Vector2 = Vector2(169.0, -39.0)
-var shooting_frequency = 80
-var shooting_wait = 0
-var can_move = true
-var movement_speed: float = 50
-var acceleration: float = 500
-var friction: float = acceleration / movement_speed
-var facing: int = 0
 
-func _process(delta: float) -> void:
-	shooting_wait += 1
-	if shooting_wait == shooting_frequency:
-		shoot(180, 50)
-		shooting_wait = 0
-	movement(delta)
+var invincible = false # stunned
+var isAlive := true
+var health: int = 3
 
-func _physics_process(delta: float) -> void:
-	move_and_slide()
+signal damaged(attack: Attack)
 
-func movement(delta: float):
-	apply_traction(delta)
-	apply_friction(delta)
-
-func apply_traction(delta: float) -> void:
-	var traction: Vector2 = Vector2()
-
-	if(can_move):
-		if facing == 0:
-			traction.y -= 1
-		if facing == 1:
-			traction.y += 1
-		if facing == 2:
-			traction.x -= 1
-		if facing == 3:
-			traction.x += 1
-	
-	traction = traction.normalized()
-
-	velocity += traction * acceleration * delta
-
-func apply_friction(delta: float) -> void:
-	velocity -= velocity * friction * delta
-
-func shoot(direction: float, speed):
-	var new_bullet = obj_bullet.instantiate()
-	new_bullet.velocity = Vector2(speed, 0).rotated(deg_to_rad(direction))
-	new_bullet.position = position
-	get_parent().add_child(new_bullet)
+@export_group("Vision Ranges")
+@export var detection_radius := 100.0
+@export var chase_radius := 200.0
+@export var follow_radius := 25.0
 
 func respawn():
+	print("ele respawna?")
 	position = check_point
+	isAlive = true
+	health = 3
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		#TODO adaptar isso pra usar hurtbox no lugar
 		if body.is_invincible():
 			body.take_damage(1)
-	if body.is_in_group("solid"):
-		if facing == 1:
-			facing = 0
-		else:
-			facing = 1
+
+func take_damage(dmg):
+	print("Tomou lhe")
+	if(!invincible):
+		health -= dmg
+		if health <= 0:
+			queue_free()
+
+func is_invincible():
+	return invincible
+
+func _on_hitbox_damaged(attack:Attack) -> void:
+	print("jumpscare q isso funciona")
+	damaged.emit(attack)

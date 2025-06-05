@@ -8,6 +8,7 @@ var hp = 3 : set = set_hp, get = get_hp
 const check_point: Vector2 = Vector2(0, 0)
 var can_move: bool = true
 var invincible: bool = false
+var can_shoot: bool = true
 
 # dash controls
 
@@ -21,6 +22,7 @@ var aim_position : Vector2 = Vector2(1, 0)
 
 signal hp_changed
 signal died
+signal player_shoot
 
 # Camera Movement Control
 
@@ -35,6 +37,9 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
+	if can_move and can_shoot:
+		if Input.is_action_just_pressed("primary_fire"):
+			emit_signal("player_shoot")
 
 func apply_traction(delta: float) -> void:
 	var traction: Vector2 = Vector2()
