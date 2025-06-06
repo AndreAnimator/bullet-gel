@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckmqdyqfpamim"]
+[gd_scene load_steps=20 format=3 uid="uid://ckmqdyqfpamim"]
 
 [ext_resource type="Script" uid="uid://dgoqmy41wvks2" path="res://Entities/Player/player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://bk54wvivdh3ib" path="res://Assets/protag.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://jpqcqkb6o1et" path="res://Assets/1-Sheet.png" id="2_4wf4l"]
 [ext_resource type="Script" uid="uid://b7aubyhkr3ldi" path="res://Entities/Player/player_camera.gd" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://b8kge5j2w57xy" path="res://Entities/Player/player_weapon.gd" id="4_tekja"]
 [ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="5_5c2io"]
+[ext_resource type="Script" uid="uid://nmol3pnce2pp" path="res://Entities/Player/player_animation.gd" id="6_01a4e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(12, 1)
@@ -12,13 +13,154 @@ size = Vector2(12, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wf4l"]
 size = Vector2(19, 17)
 
+[sub_resource type="Animation" id="Animation_7a1se"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_lub02"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_x1y6q"]
+resource_name = "run_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.133333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ap3xn"]
+resource_name = "run_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.133333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iplt1"]
+_data = {
+&"RESET": SubResource("Animation_lub02"),
+&"idle": SubResource("Animation_7a1se"),
+&"run_left": SubResource("Animation_ap3xn"),
+&"run_right": SubResource("Animation_x1y6q")
+}
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_owvpp"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4wf4l"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_01a4e"]
+animation = &"run_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7a1se"]
+animation = &"run_right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xr8lj"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_4wf4l")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_01a4e")
+blend_point_1/pos = -0.1
+blend_point_2/node = SubResource("AnimationNodeAnimation_7a1se")
+blend_point_2/pos = 0.1
+blend_mode = 1
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_r8fok"]
+graph_offset = Vector2(-379.493, 15.0329)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_owvpp")
+nodes/TimeScale/position = Vector2(400, 100)
+nodes/WalkDirection/node = SubResource("AnimationNodeBlendSpace1D_xr8lj")
+nodes/WalkDirection/position = Vector2(100, 80)
+nodes/output/position = Vector2(640, 140)
+node_connections = [&"TimeScale", 0, &"WalkDirection", &"output", 0, &"TimeScale"]
+
 [node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["player", "respawn"]]
 collision_layer = 0
 script = ExtResource("1_onrkg")
 hitbox = NodePath("HitBox")
 
 [node name="Player" type="Sprite2D" parent="."]
-texture = ExtResource("2_i3pqv")
+position = Vector2(1.15625, -4.90708)
+scale = Vector2(0.0698746, 0.0698746)
+texture = ExtResource("2_4wf4l")
+hframes = 11
+frame = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 7.5)
@@ -39,7 +181,7 @@ script = ExtResource("4_tekja")
 firing_position = NodePath("../FiringPosition")
 
 [node name="FiringPosition" type="Marker2D" parent="."]
-position = Vector2(6.94, 0)
+position = Vector2(6.94, -4.105)
 
 [node name="HitBox" type="Area2D" parent="." groups=["player"]]
 collision_layer = 24
@@ -50,6 +192,23 @@ metadata/_custom_type_script = "uid://c1wjv857a0mom"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_4wf4l")
+
+[node name="PlayerAnimation" type="Node" parent="." node_paths=PackedStringArray("animation_tree", "sprite")]
+script = ExtResource("6_01a4e")
+animation_tree = NodePath("../AnimationTree")
+sprite = NodePath("../Player")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_iplt1")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+active = false
+tree_root = SubResource("AnimationNodeBlendTree_r8fok")
+anim_player = NodePath("../AnimationPlayer")
+parameters/TimeScale/scale = 1.0
+parameters/WalkDirection/blend_position = -0.00149256
 
 [connection signal="player_shoot" from="." to="PlayerWeapon" method="_on_character_body_2d_player_shoot"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]

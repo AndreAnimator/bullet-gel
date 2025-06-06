@@ -3,7 +3,7 @@ extends Area2D
 
 # signal hit_enemy #fazer genérico pro player
 
-@onready var bullet : Bullets = get_owner()
+@onready var bullet : Bullet = get_owner()
 
 func _ready() -> void:
 	area_entered.connect(on_area_entered)
