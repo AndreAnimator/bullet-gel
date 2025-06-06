@@ -1,18 +1,18 @@
 [gd_scene load_steps=9 format=4 uid="uid://52nbms88mx42"]
 
-[ext_resource type="PackedScene" uid="uid://brx1ahdqjyjv4" path="res://health_bar.tscn" id="1_o00ia"]
-[ext_resource type="PackedScene" uid="uid://ckmqdyqfpamim" path="res://player.tscn" id="2_is3ju"]
-[ext_resource type="Texture2D" uid="uid://bbtylgw77q0t0" path="res://Assets/block.png" id="3_is3ju"]
-[ext_resource type="PackedScene" uid="uid://tjiidy66w3hg" path="res://enemy.tscn" id="4_is3ju"]
-[ext_resource type="Texture2D" uid="uid://d0rp523l0yvqf" path="res://Assets/floor.png" id="4_o00ia"]
+[ext_resource type="PackedScene" uid="uid://ckmqdyqfpamim" path="res://Entities/Player/player.tscn" id="1_3e07v"]
+[ext_resource type="Texture2D" uid="uid://bbtylgw77q0t0" path="res://Assets/block.png" id="2_vl51c"]
+[ext_resource type="Texture2D" uid="uid://d0rp523l0yvqf" path="res://Assets/floor.png" id="3_opmy1"]
+[ext_resource type="PackedScene" uid="uid://tjiidy66w3hg" path="res://Entities/Enemies/EnemyTemplate/enemy.tscn" id="4_wqftc"]
+[ext_resource type="PackedScene" uid="uid://brx1ahdqjyjv4" path="res://UI/health_bar.tscn" id="5_m3lqc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4bqqs"]
-texture = ExtResource("3_is3ju")
+texture = ExtResource("2_vl51c")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ynsuh"]
-texture = ExtResource("4_o00ia")
+texture = ExtResource("3_opmy1")
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_v7dth"]
@@ -22,7 +22,7 @@ sources/1 = SubResource("TileSetAtlasSource_ynsuh")
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Node2D" parent="." instance=ExtResource("2_is3ju")]
+[node name="Node2D" parent="." instance=ExtResource("1_3e07v")]
 position = Vector2(-1, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." groups=["solid"]]
@@ -31,11 +31,11 @@ position = Vector2(1, 1)
 tile_map_data = PackedByteArray("AAABAAAAAQAAAAAAAAACAAEAAQAAAAAAAAADAAEAAQAAAAAAAAAEAAEAAQAAAAAAAAAFAAEAAQAAAAAAAAAGAAEAAQAAAAAAAAAHAAEAAQAAAAAAAAAIAAEAAQAAAAAAAAAAAAEAAQAAAAAAAAABAAEAAQAAAAAAAAAIAAAAAQAAAAAAAAAHAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAADAAAAAQAAAAAAAAACAAAAAQAAAAAAAAAFAP//AQAAAAAAAAAGAP//AQAAAAAAAAAHAP//AQAAAAAAAAAIAP//AQAAAAAAAAAJAP//AQAAAAAAAAAKAP//AQAAAAAAAAAKAP7/AQAAAAAAAAAAAP3/AQAAAAAAAAAAAP7/AQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAADAP//AQAAAAAAAAAEAP//AQAAAAAAAAAJAAAAAQAAAAAAAAAJAAEAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAAAAQAAAAAAAAAKAP3/AQAAAAAAAAAJAP3/AQAAAAAAAAAIAP3/AQAAAAAAAAAHAP3/AQAAAAAAAAAGAP3/AQAAAAAAAAAFAP3/AQAAAAAAAAAEAP3/AQAAAAAAAAADAP3/AQAAAAAAAAACAP3/AQAAAAAAAAABAP3/AQAAAAAAAAABAP7/AQAAAAAAAAACAP7/AQAAAAAAAAADAP7/AQAAAAAAAAAEAP7/AQAAAAAAAAAHAP7/AQAAAAAAAAAIAP7/AQAAAAAAAAAJAP7/AQAAAAAAAAAGAP7/AQAAAAAAAAAFAP7/AQAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAADAPz/AAAAAAAAAAAEAPz/AAAAAAAAAAAFAPz/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAALAP3/AAAAAAAAAAALAP7/AAAAAAAAAAALAP//AAAAAAAAAAALAAEAAAAAAAAAAAAAAPz/AAAAAAAAAAAAAPv/AAAAAAAAAAABAPv/AAAAAAAAAAACAPv/AAAAAAAAAAADAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPv/AAAAAAAAAAAHAPv/AAAAAAAAAAAIAPv/AAAAAAAAAAAJAPv/AAAAAAAAAAAKAPv/AAAAAAAAAAALAPv/AAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAALAAIAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAAPAAIAAAAAAAAAAAAQAAIAAAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAQAP//AAAAAAAAAAAQAP7/AAAAAAAAAAAQAP3/AAAAAAAAAAAQAPz/AAAAAAAAAAAPAPz/AAAAAAAAAAAPAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAMAPv/AAAAAAAAAAAQAPv/AAAAAAAAAAAOAPz/AAAAAAAAAAANAPz/AAAAAAAAAAAMAPz/AAAAAAAAAAAMAP3/AAAAAAAAAAANAP3/AAAAAAAAAAAOAP3/AAAAAAAAAAAPAP3/AAAAAAAAAAAPAP7/AAAAAAAAAAAOAP7/AAAAAAAAAAANAP7/AAAAAAAAAAAMAP7/AAAAAAAAAAAKAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAARAAIAAAAAAAAAAAARAAEAAAAAAAAAAAARAP//AAAAAAAAAAARAP7/AAAAAAAAAAARAP3/AAAAAAAAAAARAPz/AAAAAAAAAAARAPv/AAAAAAAAAAARAAAAAQAAAAAAAAAQAAAAAQAAAAAAAAAPAAAAAQAAAAAAAAAOAAAAAQAAAAAAAAANAAAAAQAAAAAAAAAMAAAAAQAAAAAAAAALAAAAAQAAAAAAAAA=")
 tile_set = SubResource("TileSet_v7dth")
 
-[node name="Enemy" parent="." instance=ExtResource("4_is3ju")]
-position = Vector2(169, -39)
+[node name="Enemy" parent="." instance=ExtResource("4_wqftc")]
+position = Vector2(-127, -137)
 
 [node name="CanvasGroup" type="CanvasGroup" parent="."]
 
-[node name="Control" parent="CanvasGroup" instance=ExtResource("1_o00ia")]
+[node name="Control" parent="CanvasGroup" instance=ExtResource("5_m3lqc")]
 
 [connection signal="hp_changed" from="Node2D" to="CanvasGroup/Control" method="_on_node_2d_hp_changed"]
