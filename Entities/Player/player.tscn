@@ -1,21 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckmqdyqfpamim"]
+[gd_scene load_steps=8 format=3 uid="uid://ckmqdyqfpamim"]
 
 [ext_resource type="Script" uid="uid://dgoqmy41wvks2" path="res://Entities/Player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://bk54wvivdh3ib" path="res://Assets/protag.png" id="2_i3pqv"]
 [ext_resource type="Script" uid="uid://b7aubyhkr3ldi" path="res://Entities/Player/player_camera.gd" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://b8kge5j2w57xy" path="res://Entities/Player/player_weapon.gd" id="4_tekja"]
+[ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="5_5c2io"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(12, 14)
+size = Vector2(12, 1)
 
-[node name="CharacterBody2D" type="CharacterBody2D" groups=["player", "respawn"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wf4l"]
+size = Vector2(19, 17)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["player", "respawn"]]
+collision_layer = 0
 script = ExtResource("1_onrkg")
+hitbox = NodePath("HitBox")
 
 [node name="Player" type="Sprite2D" parent="."]
 texture = ExtResource("2_i3pqv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1)
+position = Vector2(1, 7.5)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
@@ -33,7 +39,19 @@ script = ExtResource("4_tekja")
 firing_position = NodePath("../FiringPosition")
 
 [node name="FiringPosition" type="Marker2D" parent="."]
+position = Vector2(6.94, 0)
+
+[node name="HitBox" type="Area2D" parent="." groups=["player"]]
+collision_layer = 24
+collision_mask = 96
+script = ExtResource("5_5c2io")
+metadata/_custom_type_script = "uid://c1wjv857a0mom"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_4wf4l")
 
 [connection signal="player_shoot" from="." to="PlayerWeapon" method="_on_character_body_2d_player_shoot"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashAgainTimer" to="." method="_on_dash_again_timer_timeout"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

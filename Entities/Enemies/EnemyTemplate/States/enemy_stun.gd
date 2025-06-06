@@ -3,13 +3,12 @@ extends EnemyState
 var timer : Timer
 
 func enter():
-	print("Stun")
 	timer = Timer.new()
 	timer.wait_time = 1.0
 	timer.autostart = true
 	timer.timeout.connect(on_timer_finished)
 	add_child(timer)
-	enemy.stunned = true
+	enemy.invincible = true
 
 func exit():
 	timer.stop()

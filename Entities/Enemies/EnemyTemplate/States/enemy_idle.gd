@@ -3,7 +3,6 @@ extends EnemyState
 var idle_timer : Timer
 
 func enter():
-	print("ta idle")
 	enemy.velocity = Vector2.ZERO
 
 	idle_timer = Timer.new()
@@ -13,14 +12,12 @@ func enter():
 	add_child(idle_timer)
 
 func on_timeout():
-	print("Dá uma caminhadinha")
 	transitioned.emit(self, "wander")
 
 func _physics_process(delta: float) -> void:
 	try_chase()
 
 func exit():
-	print("Saia do Idle")
 	idle_timer.stop()
 	idle_timer.timeout.disconnect(on_timeout)
 	idle_timer.queue_free()

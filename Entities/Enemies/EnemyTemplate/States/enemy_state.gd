@@ -7,32 +7,29 @@ signal transitioned(state: EnemyState, new_state_name: String)
 var player : Player
 
 func _ready():
-    print("Ready")
-    player = get_tree().get_first_node_in_group("player")
-    print("Pegou o Player")
-    print(player)
-    enemy.damaged.connect(on_damaged)
+	player = get_tree().get_first_node_in_group("player")
+	enemy.damaged.connect(on_damaged)
 
 func enter():
-    pass
+	pass
 
 func process_state(delta: float):
-    pass
+	pass
 
 func physics_process_state(delta: float):
-    pass
+	pass
 
 func exit():
-    pass
+	pass
 
 func try_chase() -> bool:
-    if get_distance_to_player() <= enemy.detection_radius:
-        transitioned.emit(self, "chase")
-        return true
-    return false
+	if get_distance_to_player() <= enemy.detection_radius:
+		transitioned.emit(self, "chase")
+		return true
+	return false
 
 func get_distance_to_player() -> float:
-    return player.global_position.distance_to(enemy.global_position)
+	return player.global_position.distance_to(enemy.global_position)
 
 func on_damaged(attack: Attack):
-    transitioned.emit(self, "stun")
+	transitioned.emit(self, "stun")

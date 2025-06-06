@@ -1,29 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6xkm0vifs0ay"]
+[gd_scene load_steps=6 format=3 uid="uid://b6xkm0vifs0ay"]
 
-[ext_resource type="Script" uid="uid://bcnp3k8tln38u" path="res://Objects/PlayerBullets/bullet.gd" id="1_lyxxk"]
+[ext_resource type="Script" uid="uid://t0w1ushk1ulp" path="res://Objects/PlayerBullets/player_bullets.gd" id="1_adegj"]
 [ext_resource type="Texture2D" uid="uid://6v26f1yk146c" path="res://Assets/player_bullet.png" id="2_lyxxk"]
-[ext_resource type="Script" uid="uid://bapqvi2geihtq" path="res://Util/Components/hurtbox.gd" id="3_adegj"]
+[ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="3_cd1yt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cd1yt"]
 size = Vector2(16, 3.95335)
 
-[node name="PlayerBullets" type="CharacterBody2D"]
-script = ExtResource("1_lyxxk")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_adegj"]
+
+[node name="PlayerBullets" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["player_bullet"]]
+scale = Vector2(1, 1.01249)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_adegj")
+hitbox = NodePath("Hurtbox")
+target_speed = 1000.0
+acceleraton = 5.0
 
 [node name="Bullet" type="Sprite2D" parent="."]
 rotation = 1.5708
-scale = Vector2(0.949967, 1)
 texture = ExtResource("2_lyxxk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-scale = Vector2(1, 1.0118)
+[node name="Ground Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_cd1yt")
 
-[node name="Hurtbox" type="Area2D" parent="."]
-script = ExtResource("3_adegj")
+[node name="Hurtbox" type="Area2D" parent="." groups=["player_bullet"]]
+collision_layer = 8
+collision_mask = 64
+script = ExtResource("3_cd1yt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -2.08616e-07)
-scale = Vector2(1, 1.0118)
-shape = SubResource("RectangleShape2D_cd1yt")
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_adegj")

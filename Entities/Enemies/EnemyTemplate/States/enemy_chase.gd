@@ -5,10 +5,9 @@ extends EnemyState
 var shooting_frequency = 80
 var shooting_wait = 0
 
-const obj_bullet = preload("res://Objects/Bullets/bullets.tscn")
+const obj_bullet = preload("res://Objects/EnemyBullets/Bullets/bullets.tscn")
 
 func physics_process_state(delta: float):
-	print("persiga")
 	var direction = player.global_position - enemy.global_position
 
 	var distance = direction.length()
@@ -25,17 +24,13 @@ func physics_process_state(delta: float):
 
 	shooting_wait += 1
 	if shooting_wait == shooting_frequency:
-		print(" o que é direção ")
-		print("pou pou")
-		print(direction)
-		shoot(direction, 20)
+		shoot()
 		shooting_wait = 0
 
-func shoot(direction: Vector2, speed):
+func shoot():
 	print("Atira caralho")
-	var player = get_tree().get_first_node_in_group("player")
-	var new_bullet = obj_bullet.instantiate()
-	direction = direction - enemy.global_position
-	get_parent().add_child(new_bullet)
-	new_bullet.position = enemy.position
-	new_bullet.rotation = direction.angle()
+	var spawned_bullet := obj_bullet.instantiate()
+	var player_direction = player.global_position - enemy.global_position
+	spawned_bullet.position = enemy.global_position
+	get_tree().root.call_deferred("add_child", spawned_bullet)
+	spawned_bullet.rotation = player_direction.angle()

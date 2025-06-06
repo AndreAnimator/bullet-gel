@@ -1,17 +1,18 @@
 [gd_scene load_steps=6 format=3 uid="uid://ygrw13ixb371"]
 
-[ext_resource type="Script" uid="uid://t0w1ushk1ulp" path="res://Objects/Bullets/bullets.gd" id="1_daqjf"]
+[ext_resource type="Script" uid="uid://yemjg1ot7bi4" path="res://Objects/EnemyBullets/Bullets/enemy_bullets.gd" id="1_xdd16"]
 [ext_resource type="Texture2D" uid="uid://comww2bvwsma" path="res://Assets/bullet.png" id="2_qumpn"]
-[ext_resource type="Script" uid="uid://bapqvi2geihtq" path="res://Util/Components/hurtbox.gd" id="3_wr1be"]
+[ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="3_wr1be"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yc357"]
 size = Vector2(20, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0h1s"]
-size = Vector2(12, 12)
+size = Vector2(23, 24)
 
-[node name="Bullets" type="CharacterBody2D"]
-script = ExtResource("1_daqjf")
+[node name="Bullets" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["enemy_bullet"]]
+script = ExtResource("1_xdd16")
+hitbox = NodePath("BulletHurtbox")
 
 [node name="Bullet" type="Sprite2D" parent="."]
 texture = ExtResource("2_qumpn")
@@ -20,10 +21,13 @@ texture = ExtResource("2_qumpn")
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_yc357")
 
-[node name="BulletHurtbox" type="Area2D" parent="."]
+[node name="BulletHurtbox" type="Area2D" parent="." groups=["enemy_bullet"]]
+collision_layer = 64
+collision_mask = 8
 script = ExtResource("3_wr1be")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletHurtbox"]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_u0h1s")
 
 [connection signal="body_entered" from="BulletHurtbox" to="." method="_on_bullet_hurtbox_body_entered"]
