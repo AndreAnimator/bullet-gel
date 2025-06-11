@@ -13,19 +13,15 @@ func _physics_process(delta: float) -> void:
 	var velocity = player.velocity
 	print("pega a velocidade do player")
 
-	if velocity:
+	if velocity.x > 1.0 or velocity.x < -1.0 or velocity.y > 1.0 or velocity.y < -1.0:
 		var time_scale = 1
-		print("Ta velocity")
 
 		if sign(player.aim_position.x) != sign(player.velocity.x):
 			time_scale = -1
-			print("Inverte posição")
 		
 		animation_tree.set("parameters/TimeScale/scale", time_scale)
 		animation_tree.set("parameters/WalkDirection/blend_position", sign(player.aim_position.x))
-		print("Seta as animation tree")
 	else:
 		sprite.flip_h = player.aim_position.x < 0
 		animation_tree.set("parameters/TimeScale/scale", 1)
-		animation_tree.set("parametes/WalkDirection/blend_position", 0)
-		print("Seta as animation tree")
+		animation_tree.set("parameters/WalkDirection/blend_position", 0)
