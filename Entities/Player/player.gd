@@ -11,6 +11,7 @@ var can_move: bool = true
 var invincible: bool = false
 var can_shoot: bool = true
 var attack := Attack.new()
+var can_parry: bool = true
 
 # dash controls
 
@@ -116,7 +117,6 @@ func _on_dash_again_timer_timeout() -> void:
 func _on_hit_box_body_entered(body:Node2D) -> void:
 	print("Isso sequer entra?")
 	if body.is_in_group("enemy"):
-		print("Encostou no inimigo")
 		#TODO adaptar isso pra usar hurtbox no lugar
 		if !body.is_invincible():
 			take_damage(attack)

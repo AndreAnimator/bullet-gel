@@ -15,6 +15,7 @@ signal damaged(attack: Attack)
 @export var detection_radius := 100.0
 @export var chase_radius := 200.0
 @export var follow_radius := 25.0
+@export var can_parry := false
 
 func _ready():
 	if hitbox:
