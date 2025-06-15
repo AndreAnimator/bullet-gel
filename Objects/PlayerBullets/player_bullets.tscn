@@ -12,11 +12,9 @@ size = Vector2(16, 3.95335)
 [node name="PlayerBullets" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["player_bullet"]]
 scale = Vector2(1, 1.01249)
 collision_layer = 0
-collision_mask = 0
 script = ExtResource("1_adegj")
 hitbox = NodePath("Hurtbox")
 target_speed = 1000.0
-acceleraton = 5.0
 
 [node name="Bullet" type="Sprite2D" parent="."]
 rotation = 1.5708

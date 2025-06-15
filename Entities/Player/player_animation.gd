@@ -7,11 +7,9 @@ extends Node
 
 func _ready():
 	animation_tree.active = true
-	print("Ativou árvore")
 
 func _physics_process(delta: float) -> void:
 	var velocity = player.velocity
-	print("pega a velocidade do player")
 
 	if velocity.x > 1.0 or velocity.x < -1.0 or velocity.y > 1.0 or velocity.y < -1.0:
 		var time_scale = 1
