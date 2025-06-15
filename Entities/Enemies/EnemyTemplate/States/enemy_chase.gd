@@ -1,6 +1,6 @@
 extends EnemyState
 
-@export var chase_speed := 75.0
+@export var chase_speed := 20.0
 
 var shooting_frequency = 80
 var shooting_wait = 0
@@ -21,13 +21,12 @@ func physics_process_state(delta: float):
 		transitioned.emit(self, "wander")
 		return
 	
-	if teste:
-		enemy.velocity = direction.normalized()*chase_speed
+	enemy.velocity = direction.normalized()*chase_speed
 
-		if distance <= enemy.follow_radius:
-			enemy.velocity = Vector2.ZERO
-		
-		enemy.move_and_slide()
+	if distance <= enemy.follow_radius:
+		enemy.velocity = Vector2.ZERO
+	
+	enemy.move_and_slide()
 	shooting_wait += 1
 	if shooting_quantity == maximum_shooting and shooting_wait == shooting_frequency:
 		shooting_quantity = 0

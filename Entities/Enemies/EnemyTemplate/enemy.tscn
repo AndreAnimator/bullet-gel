@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://tjiidy66w3hg"]
+[gd_scene load_steps=14 format=3 uid="uid://tjiidy66w3hg"]
 
 [ext_resource type="Script" uid="uid://o6o3n5bmg7o" path="res://Entities/Enemies/EnemyTemplate/enemy.gd" id="1_4gyqm"]
 [ext_resource type="Texture2D" uid="uid://8gok1px5stqh" path="res://Assets/enemy.png" id="1_7k104"]
 [ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="2_m0rfr"]
+[ext_resource type="Shader" uid="uid://bbymo6nkqo1al" path="res://Util/Shaders/damaged.gdshader" id="3_3oxjx"]
 [ext_resource type="Script" uid="uid://b4j6levlit25k" path="res://Util/Components/health.gd" id="4_3oxjx"]
 [ext_resource type="Script" uid="uid://blhe4swsuh8eb" path="res://Entities/Enemies/EnemyTemplate/enemy_state_machine.gd" id="5_m0rfr"]
 [ext_resource type="Script" uid="uid://e4fxsres0ct8" path="res://Entities/Enemies/EnemyTemplate/States/enemy_idle.gd" id="6_kwjsh"]
@@ -16,10 +17,15 @@ size = Vector2(14, 13)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyqm"]
 size = Vector2(10, 5)
 
-[node name="Enemy" type="CharacterBody2D" groups=["enemy", "respawn"]]
-collision_layer = 65
-collision_mask = 9
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_22qmv"]
+shader = ExtResource("3_3oxjx")
+shader_parameter/flash_modifier = 0.0
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("sprite") groups=["enemy", "respawn"]]
+collision_layer = 64
+collision_mask = 10
 script = ExtResource("1_4gyqm")
+sprite = NodePath("Enemy")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy"]]
 collision_layer = 64
@@ -35,6 +41,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4gyqm")
 
 [node name="Enemy" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_22qmv")
 texture = ExtResource("1_7k104")
 
 [node name="Health" type="Node" parent="." node_paths=PackedStringArray("hitbox")]
@@ -59,3 +66,4 @@ script = ExtResource("9_x00fy")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_area_2d_body_entered"]
 [connection signal="damaged" from="Hitbox" to="." method="_on_hitbox_damaged"]
+[connection signal="stunned" from="Hitbox" to="." method="_on_hitbox_stunned"]

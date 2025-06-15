@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @export var hitbox : HitBox
+@export var sprite : Sprite2D
 var speed: float = 200
 var acceleration: float = 2000
 var friction: float = acceleration / speed
@@ -12,6 +13,7 @@ var invincible: bool = false
 var can_shoot: bool = true
 var attack := Attack.new()
 var can_parry: bool = true
+var damaged_duration: float = 0.15
 
 # dash controls
 
@@ -28,6 +30,7 @@ signal died
 signal player_shoot
 
 func _ready():
+	sprite.material.set_shader_parameter("flash_modifier", 0)
 	if hitbox:
 		hitbox.damaged.connect(take_damage)
 
@@ -91,6 +94,11 @@ func set_hp(new_hp):
 	hp = new_hp
 	if hp <= 0:
 		die()
+	sprite.material.set_shader_parameter("flash_modifier", 1)
+	invincible = true
+	await get_tree().create_timer(damaged_duration).timeout
+	invincible = false
+	sprite.material.set_shader_parameter("flash_modifier", 0)
 
 func is_invincible():
 	return invincible

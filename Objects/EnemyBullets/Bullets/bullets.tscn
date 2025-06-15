@@ -11,6 +11,7 @@ size = Vector2(20, 2)
 size = Vector2(23, 24)
 
 [node name="Bullets" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["enemy_bullet"]]
+collision_layer = 0
 script = ExtResource("1_xdd16")
 hitbox = NodePath("BulletHurtbox")
 
@@ -27,7 +28,6 @@ collision_mask = 8
 script = ExtResource("3_wr1be")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletHurtbox"]
-position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_u0h1s")
 
 [connection signal="body_entered" from="BulletHurtbox" to="." method="_on_bullet_hurtbox_body_entered"]

@@ -1,11 +1,16 @@
-[gd_scene load_steps=20 format=3 uid="uid://ckmqdyqfpamim"]
+[gd_scene load_steps=22 format=3 uid="uid://ckmqdyqfpamim"]
 
+[ext_resource type="Shader" uid="uid://bbymo6nkqo1al" path="res://Util/Shaders/damaged.gdshader" id="1_01a4e"]
 [ext_resource type="Script" uid="uid://dgoqmy41wvks2" path="res://Entities/Player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://jpqcqkb6o1et" path="res://Assets/1-Sheet.png" id="2_4wf4l"]
 [ext_resource type="Script" uid="uid://b7aubyhkr3ldi" path="res://Entities/Player/player_camera.gd" id="3_lu8i8"]
 [ext_resource type="Script" uid="uid://b8kge5j2w57xy" path="res://Entities/Player/player_weapon.gd" id="4_tekja"]
 [ext_resource type="Script" uid="uid://c1wjv857a0mom" path="res://Util/Components/hitbox.gd" id="5_5c2io"]
 [ext_resource type="Script" uid="uid://nmol3pnce2pp" path="res://Entities/Player/player_animation.gd" id="6_01a4e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01a4e"]
+shader = ExtResource("1_01a4e")
+shader_parameter/flash_modifier = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(12, 1)
@@ -150,13 +155,16 @@ nodes/WalkDirection/position = Vector2(100, 80)
 nodes/output/position = Vector2(640, 140)
 node_connections = [&"TimeScale", 0, &"WalkDirection", &"output", 0, &"TimeScale"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hitbox") groups=["player", "respawn"]]
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "sprite") groups=["player", "respawn"]]
 collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_onrkg")
 hitbox = NodePath("HitBox")
+sprite = NodePath("Player")
 
 [node name="Player" type="Sprite2D" parent="."]
-position = Vector2(1.15625, -4.90708)
+material = SubResource("ShaderMaterial_01a4e")
+position = Vector2(1, -5)
 scale = Vector2(0.0698746, 0.0698746)
 texture = ExtResource("2_4wf4l")
 hframes = 11

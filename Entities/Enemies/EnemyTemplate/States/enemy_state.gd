@@ -9,6 +9,7 @@ var player : Player
 func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	enemy.damaged.connect(on_damaged)
+	enemy.stunned.connect(on_stunned)
 
 func enter():
 	pass
@@ -32,4 +33,7 @@ func get_distance_to_player() -> float:
 	return player.global_position.distance_to(enemy.global_position)
 
 func on_damaged(attack: Attack):
+	pass
+
+func on_stunned(attack: Attack):
 	transitioned.emit(self, "stun")
